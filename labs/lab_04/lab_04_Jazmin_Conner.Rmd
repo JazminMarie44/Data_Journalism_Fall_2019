@@ -563,7 +563,6 @@ mingo %>%
 
 #The most significant combo or in other words the combo with the highest amount of pills is Actavis Pharma, Inc, Miami-Luken and Tug Valley Pharmacy. 
 
-
 ```
 
 **Task** Being a good data journalist, you operate on the principle that everyone is flawed and you should be extra skeptical of everyone's work -- especially your own.  

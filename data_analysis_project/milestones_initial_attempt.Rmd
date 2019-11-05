@@ -1,0 +1,659 @@
+---
+title: "Milestones_initial_attempt"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r}
+
+# Load Tidyverse, janitor and arcos, tidycensus, mapview, ggthemes, scales
+
+library(tidyverse)
+library(janitor)
+library(tidycensus)
+
+library(arcos)
+
+library(mapview)
+library(ggthemes)
+library(scales)
+
+
+```
+
+
+```{r}
+# store one of our API keys as an object called key
+key <- "uO4EK6I"
+```
+
+The different data sets are detailed here: [ARCOS API](https://wpinvestigative.github.io/arcos/).
+Caution: do NOT use the raw_data() function, it will almost certainly crash your computer.
+
+
+
+
+WEST VIRGINIA STATE ANALYSIS
+
+1. Do certain months consistently have more opioid shipments during the period of 2006-2012 relative to the other months?
+
+
+2. Are there certain months that stay at a certain number of shipments consistently through-out the 2006 to 2012 period?
+
+3. Do the winter months or the summer months have consistently more opioid shipments? If so in which years? 
+
+4. Is there a 12 month trend for opioid shipments that is consistent through-out the years 2006-2012?
+
+5. Are there any abnormal or large spikes in the number of opioid shipments for a certain month?
+
+6. (Conintinuation of last question) Are these spikes consitent in the month that it's happening or is it a different month depending on the year?
+
+
+
+
+
+
+PILLS BY MONTH FOR WEST VIRGINIA
+Year 2006
+
+```{r}
+
+west_virginia <- summarized_county_monthly(state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2006")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="West Virginia", subtitle = "Total pills shipped to West Virginia by month in 2006", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+  
+```
+
+
+
+
+
+Year 2007
+
+```{r}
+
+west_virginia <- summarized_county_monthly(state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2007")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="West Virginia", subtitle = "Total pills shipped to West Virginia by month in 2006", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+  
+```
+
+
+
+
+Year 2008
+
+```{r}
+
+west_virginia <- summarized_county_monthly(state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2008")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="West Virginia", subtitle = "Total pills shipped to West Virginia by month in 2006", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+  
+```
+
+
+
+
+Year 2009
+
+```{r}
+
+west_virginia <- summarized_county_monthly(state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2009")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="West Virginia", subtitle = "Total pills shipped to West Virginia by month in 2006", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+  
+```
+
+
+
+
+Year 2010
+
+```{r}
+
+west_virginia <- summarized_county_monthly(state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2010")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="West Virginia", subtitle = "Total pills shipped to West Virginia by month in 2006", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+  
+```
+
+
+
+
+Year 2011
+
+```{r}
+
+west_virginia <- summarized_county_monthly(state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2011")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="West Virginia", subtitle = "Total pills shipped to West Virginia by month in 2006", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+  
+```
+
+
+
+
+Year 2012
+```{r}
+
+west_virginia <- summarized_county_monthly(state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2012")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="West Virginia", subtitle = "Total pills shipped to West Virginia by month in 2006", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+  
+```
+
+
+
+
+
+LOGAN COUNTY, WEST VIRGINIA ANALYSIS QUESTIONS
+
+7. Do certain months consistently have more opioid shipments during the period of 2006-2012 relative to the other months?
+
+8. Are there certain months that stay at a certain number of shipments consistently through-out the 2006 to 2012 period?
+
+9. Do the winter months or the summer months have consistently more opioid shipments? If so in which years? 
+
+10. Is there a 12 month trend for opioid shipments that is consistent through-out the years 2006-2012?
+
+11. Are there any abnormal or large spikes in the number of opioid shipments for a certain month?
+
+12. (Conintinuation of last question) Are these spikes consitent in the month that it's happening or is it a different month depending on the year?
+
+
+
+
+
+PILLS BY MONTH LOGAN COUNTY WEST VIRGINIA
+Year 2006
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2006")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Logan county 2006", subtitle = "Total pills shipped to West Virginia by month", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+  
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2006")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+ labs(x="Month", y="Total pills", title="Logan county 2006", subtitle = "Total pills shipped to West Virginia by month in 2006", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+
+Year 2007
+
+```{r}
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2007")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Logan county 2007", subtitle = "Total pills shipped to West Virginia by month in 2007", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2007")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+ labs(x="Month", y="Total pills", title="Logan county 2007", subtitle = "Total pills shipped to West Virginia by month in 2007", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+
+Year 2008
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2008")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Logan county 2008", subtitle = "Total pills shipped to West Virginia by month", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+
+```
+
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2008")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+  labs(x="Month", y="Total pills", title="Logan county 2008", subtitle = "Total pills shipped to West Virginia by month in 2008", caption = "Source: DEA ARCOS database, via Washington Post")
+
+```
+
+
+Year 2009
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2009")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Logan county 2009", subtitle = "Total pills shipped to West Virginia by month", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2009")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+ labs(x="Month", y="Total pills", title="Logan county 2009", subtitle = "Total pills shipped to West Virginia by month in 2009", caption = "Source: DEA ARCOS database, via Washington Post")
+
+```
+
+
+Year 2010
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2010")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Logan county 2010", subtitle = "Total pills shipped to West Virginia by month", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2010")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+  labs(x="Month", y="Total pills", title="Logan county 2010", subtitle = "Total pills shipped to West Virginia by month in 2010", caption = "Source: DEA ARCOS database, via Washington Post")
+
+```
+
+
+Year 2011
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2011")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Logan county 2011", subtitle = "Total pills shipped to West Virginia by month in 2011", caption = "Source: DEA ARCOS database, via Washington Post")
+  
+options(scipen=999)
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2011")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+ labs(x="Month", y="Total pills", title="Logan county 2011", subtitle = "Total pills shipped to West Virginia by month in 2011", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+
+Year 2012
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2012")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Logan county 2012", subtitle = "Total pills shipped to West Virginia by month", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2012")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+  labs(x="Month", y="Total pills", title="Logan county 2012", subtitle = "Total pills shipped to West Virginia by month in 2012", caption = "Source: DEA ARCOS database, via Washington Post")
+
+```
+
+
+MINGO COUNTY, WEST VIRIGINIA ANALYSIS QUESTIONS
+
+13. Do certain months consistently have more opioid shipments during the period of 2006-2012 relative to the other months?
+
+14. Are there certain months that stay at a certain number of shipments consistently through-out the 2006 to 2012 period?
+
+15. Do the winter months or the summer months have consistently more opioid shipments? If so in which years? 
+
+16. Is there a 12 month trend for opioid shipments that is consistent through-out the years 2006-2012?
+
+17. Are there any abnormal or large spikes in the number of opioid shipments for a certain month?
+
+18. (Conintinuation of last question) Are these spikes consitent in the month that it's happening or is it a different month depending on the year?
+
+
+
+
+PILLS BY MONTH FOR MINGO COUNTY, WEST VIRGINIA
+Year 2006
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2006")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Mingo county 2006", subtitle = "Total pills shipped to West Virginia by month", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+  
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2006")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+ labs(x="Month", y="Total pills", title="Mingo county 2006", subtitle = "Total pills shipped to West Virginia by month in 2006", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+
+Year 2007
+
+```{r}
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2007")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Mingo county 2007", subtitle = "Total pills shipped to West Virginia by month in 2007", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2007")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+ labs(x="Month", y="Total pills", title="Mingo county 2007", subtitle = "Total pills shipped to West Virginia by month in 2007", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+
+Year 2008
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2008")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Mingo county 2008", subtitle = "Total pills shipped to West Virginia by month", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+
+```
+
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2008")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+  labs(x="Month", y="Total pills", title="Mingo county 2008", subtitle = "Total pills shipped to West Virginia by month in 2008", caption = "Source: DEA ARCOS database, via Washington Post")
+
+```
+
+
+Year 2009
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2009")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Mingo county 2009", subtitle = "Total pills shipped to West Virginia by month", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2009")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+ labs(x="Month", y="Total pills", title="Mingo county 2009", subtitle = "Total pills shipped to West Virginia by month in 2009", caption = "Source: DEA ARCOS database, via Washington Post")
+
+```
+
+
+Year 2010
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2010")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Mingo county 2010", subtitle = "Total pills shipped to West Virginia by month", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2010")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+  labs(x="Month", y="Total pills", title="Mingo county 2010", subtitle = "Total pills shipped to West Virginia by month in 2010", caption = "Source: DEA ARCOS database, via Washington Post")
+
+```
+
+
+Year 2011
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2011")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Mingo county 2011", subtitle = "Total pills shipped to West Virginia by month in 2011", caption = "Source: DEA ARCOS database, via Washington Post")
+  
+options(scipen=999)
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2011")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+ labs(x="Month", y="Total pills", title="Mingo County 2011", subtitle = "Total pills shipped to West Virginia by month in 2011", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+
+Year 2012
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2012")
+
+ggplot(west_virginia) +
+  geom_bar(stat="identity", aes(month, dosage_unit), fill="royal blue") +
+  labs(x="Month", y="Total pills", title="Mingo County 2012", subtitle = "Total pills shipped to West Virginia by month", caption = "Source: DEA ARCOS database, via Washington Post")
+ 
+  options(scipen=999)
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2012")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+  labs(x="Month", y="Total pills", title="Mingo county 2012", subtitle = "Total pills shipped to West Virginia by month in 2012", caption = "Source: DEA ARCOS database, via Washington Post")
+
+```
+
+
+
+19. Are there any trends that you see consistent through-out Mingo and Logan county or West Virginia state as a whole?
+
+
+
+
+
+
+

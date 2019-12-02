@@ -1,0 +1,295 @@
+---
+title: "Data_Analysis_#2"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Loading in packages & data
+
+
+```{r}
+
+# Load Tidyverse, janitor and arcos, tidycensus, mapview, ggthemes, scales
+
+library(tidyverse)
+library(janitor)
+library(tidycensus)
+
+library(arcos)
+
+library(mapview)
+library(ggthemes)
+library(scales)
+
+```
+
+## Storing key to load in data
+
+```{r}
+# store one of our API keys as an object called key
+key <- "uO4EK6I"
+```
+
+## Loading in data
+
+```{r}
+
+pills_county_month <- read_csv("pills_county_month.csv")
+pills_county_month <- clean_names(pills_county_month)
+
+pills_county_month_year <- read_csv("pills_county_month_year.csv")
+pills_county_month_year <- clean_names(pills_county_month_year)
+
+pills_state <- read_csv("pills_state.csv")
+pills_state <- clean_names(pills_state)
+
+pills_state_month <- read_csv("pills_state_month.csv")
+pills_state_month <- clean_names(pills_state_month)
+
+```
+
+1. Can the pills dip in January be seen at the national level?
+ 
+
+```{r}
+
+pills_state_monthRE <- pills_state_month %>%
+  group_by(month) %>%
+  summarise(total_pills = sum(total_pills)) 
+
+ggplot(pills_state_monthRE) +
+ geom_point(aes(month, total_pills)) +
+ labs(x="Month", y="Total pills", title="National total pills by month", subtitle = "All U.S. states total pills by month", caption = "Source: DEA ARCOS database, via Washington Post")
+  options(scipen=999)
+ 
+```
+
+#Yes.The trend of opiod sales dropping in January can be seen at a national level. The drop from December to January is about a 75 million difference which I consider significant.
+
+
+
+```{r}
+
+pills_state_monthCH <- pivot_wider(pills_state_month, id_cols = buyer_state, names_from = month,
+  values_from = total_pills, values_fill = NULL, values_fn = NULL) 
+ 
+```   
+
+```{r}
+
+pills_state_monthCH 
+```
+
+
+```{r}
+
+pills_state_monthCH %>%
+      select(buyer_state, "01","12") 
+      
+```
+
+2. How does the national pills dip in January compare to the dip seen in West Virginia and the two counties Mingo and Logan?
+
+#The only years in which there wasn't a drop in January for West Virginia was 2011 and 2012 (the end of the opiod epidemic which makes me wonder whether this is a reason it did not follow the trend.) I should note that the other years did not contain large differences in their January dip and the two years that don't have the dip were not by significant amounts.  
+
+#In Logan County 2010 is the only year in which there was a signnificant drop (and the largest (being about 40 million)). Interestingly Mingo County in the year 2010 had a large difference between January and February but in the opposite direction than the national trend. 
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Logan", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2010")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+  labs(x="Month", y="Total pills", title="Logan county 2010", subtitle = "Total pills shipped to West Virginia by month in 2010", caption = "Source: DEA ARCOS database, via Washington Post")
+
+```
+
+#The years 2006 and 2007 for Mingo county have significant dips from January to December. 2009 to 2011 rise in January. 
+
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2006")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+ labs(x="Month", y="Total pills", title="Mingo county 2006", subtitle = "Total pills shipped to West Virginia by month in 2006", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+```{r}
+
+west_virginia <- summarized_county_monthly(county="Mingo", state="WV", key = key) %>%
+clean_names()  %>%
+filter(buyer_state == "WV", year=="2007")
+
+ggplot(west_virginia) +
+  geom_point(aes(month, dosage_unit)) +
+ labs(x="Month", y="Total pills", title="Mingo county 2007", subtitle = "Total pills shipped to West Virginia by month in 2007", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+Below I provided an analysis of the top 3 states that were hit by the opiod crisis the hardest along with three states that were mostly unaffected by the opiod crisis. 
+
+ 
+TOP 3 STATES:
+
+
+3. Does the dip in January seem to be consisten amoung states that were hit hard by the opioid crisis and those that weren't hit as hard?
+
+
+
+
+```{r}
+ggplot(pills_state_month %>%
+      group_by(buyer_state) %>%
+      filter(buyer_state == "NH") 
+       ) +
+  geom_point(aes(month, total_pills)) +
+ labs(x="Month", y="Total pills", title="New Hampshire", subtitle = "Total pills shipped to New Hampshire by month (2006-2012)", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+```{r}
+
+pills_county_month %>%
+      select(buyer_county, month, total_pills) %>%
+      filter(buyer_county =="SULLIVAN")
+
+```
+
+```{r}
+
+pills_county_month %>%
+      select(buyer_county, month, total_pills) %>%
+      filter(buyer_county =="STRAFFORD")
+
+```
+
+
+
+```{r}
+ggplot(pills_state_month %>%
+      group_by(buyer_state) %>%
+      filter(buyer_state == "PA") 
+       ) +
+  geom_point(aes(month, total_pills)) +
+ labs(x="Month", y="Total pills", title="Pennsylvania", subtitle = "Total pills shipped to Pennsylvania by month (2006-2012)", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+
+```{r}
+ggplot(pills_state_month %>%
+      group_by(buyer_state) %>%
+      filter(buyer_state == "OH") 
+       ) +
+  geom_point(aes(month, total_pills)) +
+ labs(x="Month", y="Total pills", title="Ohio", subtitle = "Total pills shipped to Ohio by month (2006-2012)", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+```{r}
+
+pills_county_month %>%
+      select(buyer_county, month, total_pills) %>%
+      filter(buyer_county =="WOOD")
+
+```
+
+```{r}
+
+pills_county_month %>%
+      select(buyer_county, month, total_pills) %>%
+      filter(buyer_county =="WAYNE")
+
+```
+
+
+
+LOWEST 3 STATES
+
+```{r}
+ggplot(pills_state_month %>%
+      group_by(buyer_state) %>%
+      filter(buyer_state == "IA") 
+       ) +
+  geom_point(aes(month, total_pills)) +
+ labs(x="Month", y="Total pills", title="Iowa", subtitle = "Total pills shipped to Iowa by month (2006-2012)", caption = "Source: DEA ARCOS database, via Washington Post")
+
+```
+
+```{r}
+
+pills_county_month %>%
+      select(buyer_county, month, total_pills) %>%
+      filter(buyer_county =="WRIGHT")
+
+```
+
+```{r}
+
+pills_county_month %>%
+      select(buyer_county, month, total_pills) %>%
+      filter(buyer_county =="WORTH")
+
+```
+
+
+
+
+```{r}
+ggplot(pills_state_month %>%
+      group_by(buyer_state) %>%
+      filter(buyer_state == "HI") 
+       ) +
+  geom_point(aes(month, total_pills)) +
+ labs(x="Month", y="Total pills", title="Hawaii", subtitle = "Total pills shipped to Hawaii by month (2006-2012)", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+
+```{r}
+ggplot(pills_state_month %>%
+      group_by(buyer_state) %>%
+      filter(buyer_state == "CA") 
+       ) +
+  geom_point(aes(month, total_pills)) +
+ labs(x="Month", y="Total pills", title="California", subtitle = "Total pills shipped to California by month (2006-2012)", caption = "Source: DEA ARCOS database, via Washington Post")
+
+
+```
+
+```{r}
+
+pills_county_month %>%
+      select(buyer_county, month, total_pills) %>%
+      filter(buyer_county =="MONTEREY")
+
+```
+
+```{r}
+
+pills_county_month %>%
+      select(buyer_county, month, total_pills) %>%
+      filter(buyer_county =="MONO")
+
+```
+
+#It looks to me that the January opiod dip is solid amoung the states even those who were not much affected by the opioid crisis. The inconsistency in seeing the trend happens when you go county by county. Some counties within the states show the January trend while others don't or show it to a small degree. The trend at the county level accounts for the variance in the difference between December and January when we look at the state level. Could it be that the small difference at the county level adds to a large level when we look at the state?
+
+
+#For example, Mono in California (one of the least affected states) does not follow the trend of an opiod dip in January even though many of the other counties does.

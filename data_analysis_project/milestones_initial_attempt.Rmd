@@ -59,8 +59,16 @@ WEST VIRGINIA STATE ANALYSIS
 
 
 
+```{r}
+pills_county_month <- read_csv("pills_county_month.csv")
 
+pills_county_month_year <- read_csv("pills_county_month_year.csv")
 
+pills_state_month <- read_csv("pills_state_month.csv")
+
+pills_state <- read_csv("pills_state.csv")
+
+```
 
 PILLS BY MONTH FOR WEST VIRGINIA
 Year 2006
